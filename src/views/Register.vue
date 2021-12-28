@@ -22,8 +22,8 @@
             label="CEP"
             @blur="getCEP"
             v-model="cep"
-            type="number"
             hide-spin-buttons
+            v-mask="'#####-###'"
           >
           </v-text-field>
         </v-col>
@@ -97,11 +97,10 @@ export default {
     },
 
     async getCEP() {
-      if (this.cep.length === 8) {
+      const cep = this.cep.replace("-", "");
+      if (cep.length === 8) {
         try {
-          const response = await fetch(
-            `https://viacep.com.br/ws/${this.cep}/json/`
-          );
+          const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
 
           const json = await response.json();
           this.cidade = json.localidade;
