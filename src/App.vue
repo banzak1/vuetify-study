@@ -18,7 +18,7 @@
 
     <!-- Login -->
     <v-main>
-      <v-router></v-router>
+      <router-view></router-view>
     </v-main>
 
     <!-- Footer -->
