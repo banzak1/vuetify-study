@@ -1,48 +1,68 @@
 <template>
-  <v-form class="mx-5" ref="form" v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="name"
-      :counter="10"
-      :rules="nameRules"
-      label="Name"
-      required
-    ></v-text-field>
+  <v-form ref="form" v-model="valid" lazy-validation>
+    <v-container
+      ><v-text-field
+        v-model="name"
+        :counter="10"
+        :rules="nameRules"
+        label="Name"
+        required
+      ></v-text-field>
 
-    <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="E-mail"
-      required
-    ></v-text-field>
+      <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="E-mail"
+        required
+      ></v-text-field>
 
-    <v-select
-      v-model="select"
-      :items="items"
-      :rules="[(v) => !!v || 'Item is required']"
-      label="Item"
-      required
-    ></v-select>
+      <v-row>
+        <v-col cols="2">
+          <v-text-field label="CEP" @blur="getCEP" v-model="cep">
+          </v-text-field>
+        </v-col>
+        <v-col cols="5">
+          <v-text-field label="Cidade" v-model="cidade"> </v-text-field>
+        </v-col>
+        <v-col cols="5">
+          <v-text-field label="Estado" v-model="estado"> </v-text-field>
+        </v-col>
+      </v-row>
 
-    <v-checkbox
-      v-model="checkbox"
-      :rules="[(v) => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
-      required
-    ></v-checkbox>
+      <v-select
+        v-model="select"
+        :items="items"
+        :rules="[(v) => !!v || 'Item is required']"
+        label="Item"
+        required
+      ></v-select>
 
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-      Validate
-    </v-btn>
+      <v-checkbox
+        v-model="checkbox"
+        :rules="[(v) => !!v || 'You must agree to continue!']"
+        label="Do you agree?"
+        required
+      ></v-checkbox>
 
-    <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
+      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+        Validate
+      </v-btn>
 
-    <v-btn color="warning" @click="resetValidation"> Reset Validation </v-btn>
+      <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
+
+      <v-btn color="warning" @click="resetValidation">
+        Reset Validation
+      </v-btn></v-container
+    >
   </v-form>
 </template>
 
 <script>
 export default {
   data: () => ({
+    cep: "",
+    cidade: "",
+    estado: "",
     valid: true,
     name: "",
     nameRules: [
@@ -69,6 +89,18 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation();
     },
+
+    async getCEP() {
+      const response = await fetch(
+        `https://viacep.com.br/ws/${this.cep}/json/`
+      );
+      const json = await response.json();
+      this.cidade = json.localidade;
+      this.estado = json.uf;
+    },
   },
 };
 </script>
+
+<style>
+</style>

@@ -5,8 +5,8 @@
       <v-app-bar-title>Vue = Vuetify</v-app-bar-title>
       <v-spacer></v-spacer>
       <v-btn
-        v-for="link in links"
-        :key="link"
+        v-for="(link, i) in links"
+        :key="i"
         color="white"
         text
         rounded
@@ -26,8 +26,8 @@
     <v-footer class="purple darken-1" padless>
       <v-row justify="center" no-gutters>
         <v-btn
-          v-for="link in links"
-          :key="link"
+          v-for="(link, i) in links"
+          :key="i"
           color="white"
           text
           rounded
