@@ -70,7 +70,7 @@ export default {
   components: {},
 
   data: () => ({
-    links: ["Home", "Login"],
+    links: ["Home", "Login", "Cadastro"],
     exibir: false,
   }),
 
