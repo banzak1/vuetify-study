@@ -6,8 +6,17 @@
       </v-card-title>
       <v-card-text>
         <v-form>
-          <v-text-field label="username"></v-text-field>
-          <v-text-field label="password"></v-text-field>
+          <v-text-field
+            label="Username"
+            prepend-icon="mdi-account-circle"
+          ></v-text-field>
+          <v-text-field
+            label="Password"
+            prepend-icon="mdi-lock"
+            :append-icon="exibir ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="exibir ? 'text' : 'password'"
+            @click:append="showHide"
+          ></v-text-field>
         </v-form>
       </v-card-text>
       <v-card-actions>
@@ -25,6 +34,14 @@ export default {
 
   components: {},
 
-  data: () => ({}),
+  data: () => ({
+    exibir: false,
+  }),
+
+  methods: {
+    showHide() {
+      this.exibir = !this.exibir;
+    },
+  },
 };
 </script>
