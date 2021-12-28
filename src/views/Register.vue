@@ -18,7 +18,13 @@
 
       <v-row>
         <v-col cols="2">
-          <v-text-field label="CEP" @blur="getCEP" v-model="cep">
+          <v-text-field
+            label="CEP"
+            @blur="getCEP"
+            v-model="cep"
+            type="number"
+            hide-spin-buttons
+          >
           </v-text-field>
         </v-col>
         <v-col cols="5">
@@ -91,12 +97,21 @@ export default {
     },
 
     async getCEP() {
-      const response = await fetch(
-        `https://viacep.com.br/ws/${this.cep}/json/`
-      );
-      const json = await response.json();
-      this.cidade = json.localidade;
-      this.estado = json.uf;
+      if (this.cep.length === 8) {
+        try {
+          const response = await fetch(
+            `https://viacep.com.br/ws/${this.cep}/json/`
+          );
+
+          const json = await response.json();
+          this.cidade = json.localidade;
+          this.estado = json.uf;
+        } catch (error) {
+          console.log("CEP inválido", error);
+        }
+      } else {
+        console.log("CEP inválido");
+      }
     },
   },
 };
